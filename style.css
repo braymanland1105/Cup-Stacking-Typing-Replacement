@@ -7,7 +7,7 @@
 
 body {
     font-family: 'Nunito', 'Arial Rounded MT Bold', sans-serif;
-    background-image: url('assets/general/Background.png');
+    background-image: url('assets/General/Background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -116,7 +116,7 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
     width: 128px;
     height: 128px;
     /* --- Use single background image for shape --- */
-    background-image: url('assets/cups/Cup_Outline.png'); /* Assumes you created this */
+    background-image: url('assets/Cups/Cup_Outline.png'); /* Assumes you created this */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -160,9 +160,9 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
     opacity: 0; /* Start invisible */
 }
 
-.cup.blue { background-image: url('assets/cups/Blue_Cup.png'); }
-.cup.red { background-image: url('assets/cups/Red_Cup.png'); }
-.cup.yellow { background-image: url('assets/cups/Yellow_Cup.png'); }
+.cup.blue { background-image: url('assets/Cups/Blue_Cup.png'); }
+.cup.red { background-image: url('assets/Cups/Red_Cup.png'); }
+.cup.yellow { background-image: url('assets/Cups/Yellow_Cup.png'); }
 
 
 .cup-letter { /* Letter on the actual cup */
@@ -239,14 +239,14 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 /* Bird Animations */
 #instruction-bird-animation {
     width: 150px; height: 192px;
-    background-image: url('assets/birds/Bird_Instruction_Sprite_Sheet.png');
+    background-image: url('assets/Birds/Bird_Instruction_Sprite_Sheet.png');
     background-repeat: no-repeat; margin: 20px auto;
 }
 
 /* Bird flying right-to-left (DEFAULT, no flip needed) */
 #flying-bird {
     position: absolute; width: 150px; height: 192px;
-    background-image: url('assets/birds/Bird_Flying_Sprite_Sheet.png');
+    background-image: url('assets/Birds/Bird_Flying_Sprite_Sheet.png');
     background-repeat: no-repeat; top: 30%; z-index: 20;
     transition: transform 3s linear;
     /* transform: scaleX(-1); */ /* Ensure this is commented out or removed */
