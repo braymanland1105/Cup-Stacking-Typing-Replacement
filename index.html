@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cup Stack Typing</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="start-screen" class="screen active">
+        <h1>Cup Stack Typing</h1>
+        <button id="start-button">START</button>
+    </div>
+
+    <div id="instruction-screen" class="screen hidden">
+        <h2>INSTRUCTIONS</h2>
+        <p>TYPE THE LETTERS ON THE CUPS TO<br>STACK AND UNSTACK THEM.</p>
+        <p>THE CURRENTLY ACTIVE LETTER IS<br>HIGHLIGHTED IN WHITE.</p>
+        <div id="instruction-bird-animation">
+            <img src="assets/birds/Bird_Instruction_Sprite_Sheet.png" alt="Instruction Bird Animation" style="opacity:0; position:absolute; width:1px; height:1px;"> </div>
+        <button id="play-button">PLAY</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div id="game-ui-top">
+            <div id="timer-section">
+                <span id="timer">0.0</span>s
+                <span id="round-counter">1/4</span>
+            </div>
+            <div id="controls-section">
+                 <button id="mute-button" class="ui-icon-button">
+                    <img src="assets/ui/Unmuted.png" alt="Mute/Unmute">
+                </button>
+                <button id="pause-button" class="ui-icon-button">
+                    <img src="assets/ui/Pause.png" alt="Pause">
+                </button>
+            </div>
+        </div>
+        <div id="game-area">
+            <div id="left-stack-area" class="stack-area"></div>
+            <div id="right-stack-area" class="stack-area"></div>
+            <div id="cup-staging-area"></div>
+             <div id="flying-bird" class="hidden">
+                 <img src="assets/birds/Bird_Flying_Sprite_Sheet.png" alt="Flying Bird" style="opacity:0; position:absolute; width:1px; height:1px;"> </div>
+        </div>
+         <img src="assets/cups/Blue_Cup.png" alt="Blue Cup" style="opacity:0; position:absolute; width:1px; height:1px;">
+        <img src="assets/cups/Red_Cup.png" alt="Red Cup" style="opacity:0; position:absolute; width:1px; height:1px;">
+        <img src="assets/cups/Yellow_Cup.png" alt="Yellow Cup" style="opacity:0; position:absolute; width:1px; height:1px;">
+    </div>
+
+    <div id="pause-overlay" class="overlay hidden">
+        <div class="overlay-content">
+            <h2>PAUSED</h2>
+            <button id="resume-button">RESUME</button>
+            <button id="home-button">HOME</button>
+        </div>
+    </div>
+
+    <div id="game-over-screen" class="screen hidden">
+        <h2>GREAT JOB!</h2>
+        <p id="final-time">YOUR TIME: 0.0 SECONDS</p>
+        <p id="best-time">BEST TIME: 0.0 SECONDS</p>
+        <button id="play-again-button">PLAY AGAIN</button>
+    </div>
+
+    <audio id="audio-instruction" src="assets/audio/instruction_card.mp3" preload="auto"></audio>
+    <audio id="audio-end-card" src="assets/audio/end_card.mp3" preload="auto"></audio>
+    <audio id="audio-cup-stack" src="assets/audio/cup_stack.mp3" preload="auto"></audio>
+    <audio id="audio-cup-rolling" src="assets/audio/cup_rolling.mp3" preload="auto"></audio>
+    <audio id="audio-button-click" src="assets/audio/button_click.mp3" preload="auto"></audio>
+    <audio id="audio-bird-fly" src="assets/audio/bird_fly.mp3" preload="auto"></audio>
+    <audio id="audio-correct-type" src="assets/audio/correct_type.mp3" preload="auto"></audio>
+    <audio id="audio-incorrect-type" src="assets/audio/incorrect_type.mp3" preload="auto"></audio>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

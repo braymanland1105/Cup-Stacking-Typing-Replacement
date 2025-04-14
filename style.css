@@ -1,0 +1,285 @@
+/* Basic Reset & Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', 'Arial Rounded MT Bold', sans-serif;
+    background-image: url('assets/general/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    color: #333;
+}
+
+/* Screen Management */
+.screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+    z-index: 1;
+    padding: 20px;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Headings and Text */
+h1, h2, p, #timer-section, #round-counter {
+     color: #FFFFFF;
+     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+h1 { font-size: 48px; font-weight: bold; margin-bottom: 40px; }
+h2 { font-size: 36px; font-weight: bold; margin-bottom: 20px; }
+p { font-size: 24px; margin-bottom: 15px; line-height: 1.4; }
+
+/* Buttons */
+button {
+    padding: 15px 30px;
+    font-size: 24px;
+    font-weight: bold;
+    font-family: inherit;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #FFFFFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); }
+
+#start-button { background-color: #3366CC; width: 180px; height: 60px; position: absolute; top: 65%; left: 50%; transform: translateX(-50%); }
+#play-button { background-color: #33CC66; width: 180px; height: 60px; position: absolute; top: 75%; left: 50%; transform: translateX(-50%); }
+#play-again-button { background-color: #FF9933; width: 220px; height: 60px; position: absolute; top: 70%; left: 50%; transform: translateX(-50%); }
+
+/* UI Icon Buttons */
+.ui-icon-button {
+    background: none; border: none; padding: 0; width: 32px; height: 32px;
+    cursor: pointer; box-shadow: none; line-height: 0; font-size: 0;
+}
+.ui-icon-button img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ui-icon-button:hover { transform: scale(1.1); box-shadow: none; }
+
+/* Game Screen Specifics */
+#game-screen { justify-content: flex-start; }
+
+#game-ui-top {
+    position: absolute; top: 20px; left: 20px; right: 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 10; pointer-events: none;
+}
+#timer-section, #controls-section { pointer-events: auto; }
+#timer-section { color: #FFFFFF; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
+#timer { font-size: 28px; }
+#round-counter { font-size: 24px; margin-left: 15px; }
+#controls-section { display: flex; gap: 20px; }
+
+#game-area { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+.stack-area { /* Kept for potential structure/debugging */
+    position: absolute; bottom: 30%; width: auto; height: 50%;
+    transform: translateX(-50%);
+}
+#left-stack-area { left: 30%; }
+#right-stack-area { left: 70%; }
+
+#cup-staging-area {
+    position: absolute; bottom: -150px; /* Start cups below screen */
+    left: 50%; width: 100px; height: 100px;
+    transform: translateX(-50%);
+}
+
+/* UPDATED: Cup Placeholder Styling - Use single outline image */
+.cup-placeholder {
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    /* --- Use single background image for shape --- */
+    background-image: url('assets/cups/Cup_Outline.png'); /* Assumes you created this */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* --- Removed border/radius/color classes --- */
+    opacity: 0; /* Initially hidden, shown by JS based on row */
+    /* transition: opacity 0.3s ease-in-out; */ /* Remove transition? Or keep for fade? Let's remove for instant show/hide */
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Ensure placeholders don't block clicks if needed */
+}
+
+/* Class to make placeholders visible (added by JS) */
+.cup-placeholder.visible {
+    opacity: 1; /* Make outline fully visible */
+}
+
+/* Style letter inside placeholder */
+.cup-placeholder .cup-letter {
+    font-size: 48px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0); /* Transparent initially */
+    transition: color 0.2s, text-shadow 0.2s;
+}
+/* Style active letter inside placeholder */
+.cup-placeholder.active .cup-letter {
+     color: rgba(255, 255, 255, 1); /* Bright white */
+     text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; /* Glow effect */
+     animation: pulse 1.5s infinite ease-in-out alternate;
+}
+
+
+/* Cup Styling (Actual Cups) */
+.cup {
+    position: absolute; width: 128px; height: 128px;
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.7s ease-out, top 0.7s ease-out, left 0.7s ease-out, opacity 0.7s;
+    z-index: 5;
+    opacity: 0; /* Start invisible */
+}
+
+.cup.blue { background-image: url('assets/cups/Blue_Cup.png'); }
+.cup.red { background-image: url('assets/cups/Red_Cup.png'); }
+.cup.yellow { background-image: url('assets/cups/Yellow_Cup.png'); }
+
+
+.cup-letter { /* Letter on the actual cup */
+    font-size: 48px; font-weight: bold; color: #333333; /* Default dark letter */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    transition: color 0.2s, text-shadow 0.2s, transform 0.2s;
+}
+
+/* Style for the active letter on an actual cup (during unstack) */
+.cup.active .cup-letter {
+    color: #FFFFFF; /* Bright white */
+    text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; /* Glow effect */
+}
+
+
+/* Cup Animations States */
+.cup.stacked {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    z-index: 5; /* Layered based on stack index in JS */
+}
+.cup.unstacked {
+    opacity: 0;
+    z-index: 1;
+}
+
+/* Cup Animation Effects */
+.cup.animating-stack {
+     transition: transform 0.7s ease-out, top 0.7s ease-out, left 0.7s ease-out, opacity 0.3s ease-out;
+}
+.cup.animating-unstack {
+    transition: transform 0.7s ease-in, top 0.7s ease-in, left 0.7s ease-in, opacity 0.7s ease-in;
+}
+.cup.rolling-off {
+    transition: transform 1.5s ease-in, left 1.5s ease-in, opacity 1.5s ease-in;
+}
+
+
+/* Feedback Animations (applied to placeholder OR cup) */
+.cup-placeholder.shake, .cup.shake {
+    animation: shake 0.3s linear;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Flash on placeholder letter */
+.cup-placeholder .cup-letter.flash-red { animation: flash-red-placeholder 0.2s linear; }
+@keyframes flash-red-placeholder {
+  0%, 100% { color: rgba(255, 255, 255, 1); text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
+  50% { color: red; text-shadow: none; }
+}
+.cup-placeholder .cup-letter.flash-green { animation: flash-green-placeholder 0.1s linear; }
+@keyframes flash-green-placeholder {
+  from { text-shadow: 0 0 8px #00FF00, 0 0 15px #00FF00; }
+  to { color: rgba(255, 255, 255, 1); text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
+}
+
+/* Flash on actual cup letter */
+.cup .cup-letter.flash-red { animation: flash-red-cup 0.2s linear; }
+@keyframes flash-red-cup {
+  0%, 100% { color: #FFFFFF; text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
+  50% { color: red; text-shadow: none; }
+}
+.cup .cup-letter.flash-green { animation: flash-green-cup 0.1s linear; }
+@keyframes flash-green-cup {
+   from { text-shadow: 0 0 8px #00FF00, 0 0 15px #00FF00; }
+   to { color: #FFFFFF; text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
+}
+
+
+/* Bird Animations */
+#instruction-bird-animation {
+    width: 150px; height: 192px;
+    background-image: url('assets/birds/Bird_Instruction_Sprite_Sheet.png');
+    background-repeat: no-repeat; margin: 20px auto;
+}
+
+/* Bird flying right-to-left (DEFAULT, no flip needed) */
+#flying-bird {
+    position: absolute; width: 150px; height: 192px;
+    background-image: url('assets/birds/Bird_Flying_Sprite_Sheet.png');
+    background-repeat: no-repeat; top: 30%; z-index: 20;
+    transition: transform 3s linear;
+    /* transform: scaleX(-1); */ /* Ensure this is commented out or removed */
+}
+
+
+/* Pause Overlay */
+.overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); display: flex;
+    justify-content: center; align-items: center; z-index: 50;
+    transition: opacity 0.3s ease-in-out;
+}
+.overlay.hidden { opacity: 0; pointer-events: none; }
+.overlay-content {
+    background-color: rgba(0, 0, 0, 0.7); padding: 40px;
+    border-radius: 10px; text-align: center; color: white;
+}
+.overlay-content h2 { font-size: 36px; margin-bottom: 30px; }
+.overlay-content button {
+    display: block; margin: 15px auto; width: 180px; height: 50px; font-size: 20px;
+}
+#resume-button { background-color: #33CC66; }
+#home-button { background-color: #3366CC; }
+
+
+/* Game Over Screen Specifics */
+#game-over-screen p { font-size: 30px; margin: 15px 0; }
+#final-time { /* Positioned by flexbox */ }
+#best-time { /* Positioned by flexbox */ }
+
+/* Pulse Animation (used by active placeholder letter) */
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
