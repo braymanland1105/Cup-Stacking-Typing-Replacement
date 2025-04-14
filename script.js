@@ -479,7 +479,7 @@ function generateCupDataForRound(round) {
         }
     }
     function toggleMute() {
-        isMuted = !isMuted; console.log("Muted:", isMuted); audio.all.forEach(aud => aud.muted = isMuted); ui.muteIcon.src = isMuted ? 'assets/ui/Muted.png' : 'assets/ui/Unmuted.png'; if (audio.buttonClick) { playAudio(audio.buttonClick); }
+        isMuted = !isMuted; console.log("Muted:", isMuted); audio.all.forEach(aud => aud.muted = isMuted); ui.muteIcon.src = isMuted ? 'assets/UI/Muted.png' : 'assets/UI/Unmuted.png'; if (audio.buttonClick) { playAudio(audio.buttonClick); }
     }
 
     // --- Run Initialization ---
