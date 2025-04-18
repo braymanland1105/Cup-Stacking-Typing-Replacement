@@ -40,6 +40,7 @@ body {
 
 .hidden {
     opacity: 0;
+    visibility: hidden; /* New line - crucial for layout */
     pointer-events: none;
     z-index: 0;
 }
@@ -75,7 +76,7 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 
 /* UI Icon Buttons */
 .ui-icon-button {
-    background: none; border: none; padding: 0; width: 32px; height: 32px;
+    background: none; border: none; padding: 0; width: 48px; height: 48px; /* Increased size here */
     cursor: pointer; box-shadow: none; line-height: 0; font-size: 0;
 }
 .ui-icon-button img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -87,9 +88,9 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 #game-ui-top {
     position: absolute; top: 20px; left: 20px; right: 20px;
     display: flex; justify-content: space-between; align-items: center;
-    z-index: 10; pointer-events: none;
+    z-index: 10; pointer-events: none; /* Kept pointer-events: none here */
 }
-#timer-section, #controls-section { pointer-events: auto; }
+#timer-section, #controls-section { pointer-events: auto; } /* Ensure these sections receive events */
 #timer-section { color: #FFFFFF; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
 #timer { font-size: 28px; }
 #round-counter { font-size: 24px; margin-left: 15px; }
@@ -144,9 +145,9 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 }
 /* Style active letter inside placeholder */
 .cup-placeholder.active .cup-letter {
-     color: rgba(255, 255, 255, 1); /* Bright white */
-     text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; /* Glow effect */
-     animation: pulse 1.5s infinite ease-in-out alternate;
+    color: rgba(255, 255, 255, 1); /* Keep bright white */
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Added black border */
+    animation: none; /* Remove the pulse animation */
 }
 
 
@@ -165,16 +166,18 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 .cup.yellow { background-image: url('assets/Cups/Yellow_Cup.png'); }
 
 
-.cup-letter { /* Letter on the actual cup */
-    font-size: 48px; font-weight: bold; color: #333333; /* Default dark letter */
+.cup-letter {
+    font-size: 48px;
+    font-weight: bold;
+    color: #333333;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    transition: color 0.2s, text-shadow 0.2s, transform 0.2s;
+    transition: color 0.2s, text-shadow 0.2s, transform 0.2s, opacity 0.4s;
 }
 
 /* Style for the active letter on an actual cup (during unstack) */
 .cup.active .cup-letter {
-    color: #FFFFFF; /* Bright white */
-    text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; /* Glow effect */
+    color: #FFFFFF; /* Keep bright white */
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Added black border */
 }
 
 
@@ -214,26 +217,26 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 /* Flash on placeholder letter */
 .cup-placeholder .cup-letter.flash-red { animation: flash-red-placeholder 0.2s linear; }
 @keyframes flash-red-placeholder {
-  0%, 100% { color: rgba(255, 255, 255, 1); text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
-  50% { color: red; text-shadow: none; }
-}
+    0%, 100% { color: rgba(255, 255, 255, 1); }
+    50% { color: red; }
+  }
 .cup-placeholder .cup-letter.flash-green { animation: flash-green-placeholder 0.1s linear; }
 @keyframes flash-green-placeholder {
-  from { text-shadow: 0 0 8px #00FF00, 0 0 15px #00FF00; }
-  to { color: rgba(255, 255, 255, 1); text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
-}
+    from { color: #00FF00; } /* Change to green color */
+    to { color: rgba(255, 255, 255, 1); } /* Back to white */
+  }
 
 /* Flash on actual cup letter */
 .cup .cup-letter.flash-red { animation: flash-red-cup 0.2s linear; }
 @keyframes flash-red-cup {
-  0%, 100% { color: #FFFFFF; text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
-  50% { color: red; text-shadow: none; }
-}
+    0%, 100% { color: #FFFFFF; }
+    50% { color: red; }
+  }
 .cup .cup-letter.flash-green { animation: flash-green-cup 0.1s linear; }
 @keyframes flash-green-cup {
-   from { text-shadow: 0 0 8px #00FF00, 0 0 15px #00FF00; }
-   to { color: #FFFFFF; text-shadow: 0 0 5px #FFFFFF, 0 0 10px #FFFFFF; }
-}
+    from { color: #00FF00; } /* Change to green color */
+    to { color: #FFFFFF; } /* Back to white */
+ }
 
 
 /* Bird Animations */
@@ -282,4 +285,39 @@ button:hover { transform: scale(1.05); box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3)
 @keyframes pulse {
     from { transform: scale(1); }
     to { transform: scale(1.05); }
+}
+
+
+/* Style paragraph text on the instruction screen with textbox styling */
+#instruction-screen p {
+    color: #FFFFFF; /* Set text color to white */
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+    padding: 15px 25px; /* Add padding around text */
+    border: 2px solid #FFFFFF; /* White border */
+    border-radius: 10px; /* Rounded corners */
+    margin: 15px auto; /* Add margin and center the block */
+    max-width: 80%; /* Limit width for better readability */
+    line-height: 1.6; /* Adjust line height */
+    text-shadow: none; /* Ensure no text shadow */
+}
+
+#timer-section {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 12px 25px;
+    border: 2px solid #FFFFFF;
+    border-radius: 10px;
+    margin: 15px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 24px; /* Match instruction text size */
+}
+
+/* Optional: Adjust existing timer text sizes if needed */
+#timer {
+    font-size: 28px; /* Slightly larger for emphasis */
+}
+
+#round-counter {
+    font-size: 24px; /* Match the container font size */
 }
